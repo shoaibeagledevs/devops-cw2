@@ -12,12 +12,13 @@ pipeline {
     }
 
     stage('Build Docker Image') {
-      steps {
-        script {
-          dockerImage = docker.build("${IMAGE}", "--no-cache")
-        }
-      }
+  steps {
+    script {
+      dockerImage = docker.build("${IMAGE}", "--no-cache .")
     }
+  }
+}
+
 
     stage('Test Docker Image') {
       steps {
