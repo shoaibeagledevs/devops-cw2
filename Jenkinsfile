@@ -29,12 +29,13 @@ pipeline {
     }
 
     stage('Push to DockerHub') {
-      steps {
-        withDockerRegistry([credentialsId: 'dockerhub-creds']) {
-          sh 'docker push mshoai306/cw2-server:1.0'
-        }
-      }
+  steps {
+    withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
+      sh 'docker push mshoai306/cw2-server:1.0'
     }
+  }
+}
+
 
     stage('Deploy to Kubernetes') {
       steps {
