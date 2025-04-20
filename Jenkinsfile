@@ -4,12 +4,12 @@ pipeline {
     IMAGE = 'mshoai306/cw2-server:1.0'
   }
 
-  stage('Clone') {
-  steps {
-    git branch: 'main', url: 'git@github.com:shoaibeagledevs/devops-cw2.git'
-  }
-}
-
+  stages {
+    stage('Clone') {
+      steps {
+        git branch: 'main', url: 'git@github.com:shoaibeagledevs/devops-cw2.git'
+      }
+    }
 
     stage('Build Docker Image') {
       steps {
@@ -23,19 +23,18 @@ pipeline {
       steps {
         sh 'docker run -d -p 8081:8081 --name test_container mshoai306/cw2-server:1.0'
         sh 'sleep 5'
-        sh 'curl -s http://localhost:8081 || echo "Failed to curl"'
+        sh 'curl -s http://localhost:8081 || echo "Test failed"'
         sh 'docker rm -f test_container'
       }
     }
 
     stage('Push to DockerHub') {
-  steps {
-    withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
-      sh 'docker push mshoai306/cw2-server:1.0'
+      steps {
+        withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
+          sh 'docker push mshoai306/cw2-server:1.0'
+        }
+      }
     }
-  }
-}
-
 
     stage('Deploy to Kubernetes') {
       steps {
