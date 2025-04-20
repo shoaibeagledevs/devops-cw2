@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    VERSION = '1.1'
+    VERSION = '2.1'
     IMAGE = "mshoai306/cw2-server:${VERSION}"
   }
 
