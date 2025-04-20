@@ -4,12 +4,12 @@ pipeline {
     IMAGE = 'mshoai306/cw2-server:1.0'
   }
 
-  stages {
-    stage('Clone') {
-      steps {
-        git 'git@github.com:shoaibeagledevs/devops-cw2.git'
-      }
-    }
+  stage('Clone') {
+  steps {
+    git branch: 'main', url: 'git@github.com:shoaibeagledevs/devops-cw2.git'
+  }
+}
+
 
     stage('Build Docker Image') {
       steps {
