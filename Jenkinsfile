@@ -38,13 +38,12 @@ pipeline {
 
     stage('Deploy to Kubernetes') {
       steps {
-          sshagent (credentials: ['prod-server-key']) {
-            sh '''
-              ssh -o StrictHostKeyChecking=no ubuntu@54.147.169.172 << 'EOF'
-              kubectl set image deployment/cw2-deploy cw2-server=mshoai306/cw2-server:1.0
-              EOF
-            '''
-          }
+        sshagent (credentials: ['prod-server-key']) {
+          sh '''
+            ssh -o StrictHostKeyChecking=no ubuntu@54.147.169.172 \
+            "kubectl set image deployment/cw2-deploy cw2-server=mshoai306/cw2-server:1.0"
+          '''
+        }
       }
     }
   }
